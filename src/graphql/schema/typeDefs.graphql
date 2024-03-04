@@ -1,0 +1,108 @@
+type Category {
+    _id: String
+    name: String
+}
+
+type User {
+    email: String
+    password: String
+    token: String
+    rol: String
+}
+
+type Client {
+    name: String
+    email: String
+}
+
+type Company {
+    _id: String
+    nit: String
+    name: String
+    address: String
+    phone: String
+}
+
+type Company {
+    nit: String
+    name: String
+    address: String
+    phone: String
+}
+
+type Precies {
+    currency: String
+    price: Float
+}
+
+type Product {
+    code: String
+    name: String
+    characteristics: String
+    precies: Precies
+    company: Company
+    category: [Category]
+}
+
+type ProductRef {
+  product: Product
+}
+
+type Inventory {
+  company: Company!
+  products: [ProductRef!]!
+}
+
+type Order {
+  client: Client!
+  products: [Product!]!
+}
+
+input RegisterInput {
+    email: String
+    password: String
+    rol: String
+}
+
+input LoginInput {
+    email: String
+    password: String
+}
+
+input RegisterProductInput {
+  company: ID!
+  category: [ID!]
+  code: String!
+  name: String!
+  characteristics: String
+  prices: [PriceInput!]!
+}
+
+input PriceInput {
+  currency: String
+  price: Int
+}
+
+input CompanyInput {
+    nit: String
+    name: String
+    address: String
+    phone: String
+}
+
+type Query {
+    user(id: ID!): User
+    getAllCompanies: [Company]
+    getAllProducts: [Product]
+    getAllCategory: [Category]
+    inventoryByCompany(companyId: ID!): Inventory
+}
+
+type Mutation {
+    registerCompany(companyInput: CompanyInput): Company
+    updateCompany(id: ID!, companyInput: CompanyInput): Company
+    deleteCompany(id: ID!): String
+    registerUser(registerInput: RegisterInput): User
+    loginUser(loginInput: LoginInput): User
+    registerProduct(input: RegisterProductInput!): Product
+}
