@@ -32,7 +32,7 @@ type Company {
 
 type Precies {
     currency: String
-    price: Float
+    price: Int
 }
 
 type Product {
@@ -75,7 +75,7 @@ input RegisterProductInput {
   code: String!
   name: String!
   characteristics: String
-  prices: [PriceInput!]!
+  precies: [PriceInput]!
 }
 
 input PriceInput {

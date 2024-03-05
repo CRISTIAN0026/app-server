@@ -4,20 +4,20 @@ import Company from "../../models/company.js";
 
 const  Query = {
   getAllProducts: async () => {
-    return await Product.find();
+    return await Product.find().populate('company').populate('category');
   },
 }
 
 const Mutation = {
   registerProduct: async (parent, args, context, info) => {
-    const { company, category, ...productData } = args.input;
+    const { company, category, precies, ...productData } = args.input;
     
     const companyFind = await Company.findById(company);
     if (!companyFind) {
       throw new Error('La empresa no existe');
     }
 
-    const newProduct = new Product({ ...productData, company, category });
+    const newProduct = new Product({ ...productData, company, category, precies });
     await newProduct.save();
 
     let inventory = await Inventory.findOne({ company });
